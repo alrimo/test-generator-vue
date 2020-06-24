@@ -1,18 +1,49 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="home mt-3">
+  	<b-container>
+  		<b-row align-h="center">
+    		<b-col>
+    			<Jumbotron />  			
+    		</b-col>
+  		</b-row>
+  		<b-row align-h="center">
+  			<b-col>
+  				<h1 class="display-4">Pre-built MQFs</h1>
+  				<b-button-group>
+  					<b-button 
+  						v-for="button in buttons" 
+  						:key="button.val"
+  						:variant="button.variant"
+  						:to="{ name: 'TestOptions', params: {testId: button.val}}"
+  						>
+  						{{button.text}}
+  					</b-button>
+  				</b-button-group>
+  			</b-col>
+  		</b-row>
+  	</b-container>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import Jumbotron from "@/views/Jumbotron.vue";
 
 export default {
   name: "Home",
   components: {
-    HelloWorld
+    Jumbotron
+  },
+  data() {
+  	return {
+	  	buttons: [
+	  		{variant: "primary", text: "C-130", val: "c-130"},
+	  		{variant: "secondary", text: "C-17", val: "c-17"},
+	  		{variant: "success", text: "C-5", val: "c-5"},
+	  		{variant: "danger", text: "KC-10", val: "kc-10"},
+	  		{variant: "warning", text: "KC-135", val: "kc-135"},
+	  		{variant: "info", text: "VIP/SAM", val: "vip-sam"},
+	  	]
+	  }
   }
 };
 </script>
