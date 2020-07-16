@@ -14,7 +14,7 @@
   						v-for="button in buttons" 
   						:key="button.val"
   						:variant="button.variant"
-  						:to="{ name: 'TestOptions', params: {testId: button.val}}"
+  						@click="loadAndGo(button.val)"
   						>
   						{{button.text}}
   					</b-button>
@@ -44,6 +44,19 @@ export default {
 	  		{variant: "info", text: "VIP/SAM", val: "vip-sam"},
 	  	]
 	  }
+  },
+  methods: {
+    loadAndGo(buttonVal) {
+      // load the data file
+      import(`@/assets/data/${buttonVal}.csv`)
+      .then( ({default: data}) => { 
+        // push question file (csv) data to global var
+        this.$testData = data;
+        // route to next test options page
+        this.$router.push({ name: 'TestOptions', params: {testId: buttonVal}});
+      })
+      .catch( error => console.log(error));
+    }
   }
 };
 </script>

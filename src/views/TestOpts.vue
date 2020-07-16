@@ -6,23 +6,27 @@
 			<b-row align-h="center" class="text-center">
 				<b-col>
 					<h1>Options Page</h1>
-					<div><p>{{x}}</p></div>
+					<div><p>{{testId}}</p></div>
 				</b-col>
 			</b-row>
 			<b-row>
 				<b-col cols="6" offset="3">
-					<b-form @submit.prevent="onSubmit">
+					<b-form
+						id="formOptions" 
+						@submit.prevent="onSubmit"
+					>
 						
 						<b-form-group
 							id="group-num-q"
 							label="Questions"
 							label-for="dd-num-q"
 							description="Select desired number of questions"
+							class="font-weight-bold"
 						>
 							<b-form-select
 								id="dd-num-q"
-								v-model="form.numQ"
-								:options="questions"
+								v-model="form.numQSelected"
+								:options="numQOpts"
 								required
 							></b-form-select>
 						</b-form-group>
@@ -32,6 +36,7 @@
 							label="Minimum Passing"
 							label-for="spin-min-passing"
 							description="Selection minimum passing score"
+							class="font-weight-bold"
 						>
 							<b-form-spinbutton
 								id="spin-min-passing"
@@ -44,7 +49,7 @@
 						<b-button 
 							type="submit" 
 							variant="primary"
-							:disabled="form.validated === false"
+							:disabled="submitDisabled"
 						>Submit</b-button>
 
 					</b-form>
@@ -60,19 +65,49 @@
 
 		data() {
 			return {
-				x: this.$route.params.testId,
+				testId: this.$route.params.testId,				
 				form: {
-					numQ: null,
-					minPass: 75,
-					validated: false
+					numQSelected: null,
+					minPass: 75
 				},
-				questions: [{ text: "Select One", value: null }]
+				questions: []
 			}
 		},
-		created() {
-			console.log("TestOpt.vue created");
-			
+		computed: {
+			numQ() {
+				return this.$testData.length;
+			},
+			numQOpts() {
+				let opts = []
+				opts.push( { value: null, text: 'Please select an option' } ) 
+				
+				//console.log(this.$testData);
+
+				let val = null;
+				for(let i=0; i < this.numQ; i++) {
+					val = i + 1;
+					opts.push( { value: val, text: val.toString() } )
+				}
+
+				return opts;
+			},
+			submitDisabled() {
+				return this.form.numQSelected == null;
+			}
+
+		},
+		methods: {
+			onSubmit() {
+				this.$router.push(
+					{ 
+						name: 'test', 
+						params: 
+							{ numQ: this.form.numQSelected, minPassing: this.form.minPass, testId: this.testId} 
+					}
+				);
+			}
 		}
+
 
 	}
 
