@@ -12,7 +12,8 @@ Vue.config.productionTip = false;
 // so we don't have to use Vuex
 let globalData = new Vue({
   data: {
-    $testData: []
+    $testData: [],
+    $questionBank: []
   }  
 });
 
@@ -26,6 +27,10 @@ Vue.mixin({
     },
     $testLength() {
       return globalData.$data.$testData.length;
+    },
+    $questionBank: {
+      get() { return globalData.$data.$questionBank},
+      set(newData) { globalData.$data.$questionBank = newData}
     }
   }
 });

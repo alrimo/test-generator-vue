@@ -102,7 +102,12 @@
 					{ 
 						name: 'test', 
 						params: 
-							{ numQ: this.form.numQSelected, minPassing: this.form.minPass, testId: this.testId} 
+							{ 
+								numQ: this.form.numQSelected, 
+								minPassing: this.form.minPass, 
+								testId: this.testId,
+								studentName: this.$route.params.studentName
+							} 
 					}
 				);
 			}

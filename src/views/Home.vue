@@ -53,7 +53,7 @@ export default {
         // push question file (csv) data to global var
         this.$testData = data;
         // route to next test options page
-        this.$router.push({ name: 'TestOptions', params: {testId: buttonVal}});
+        this.$router.push({ name: 'studentName', params: {testId: buttonVal}});
       })
       .catch( error => console.log(error));
     }

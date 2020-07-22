@@ -48,6 +48,7 @@
     <b-modal 
       id="submit-test"
       :hide-header="true"
+      @ok="submitTest"
     >
       <h3>Sumbit Test?</h3>
       <div v-if="allAnswered() == false">
@@ -72,13 +73,12 @@
         pagination: {
           currentPage: 1,
           perPage: 1
-        },
-        questionBank: []
+        }
       }
     },
     computed: {
       selectedIndex() {
-        return this.questionBank[this.pagination.currentPage-1].selectedIndex
+        return this.$questionBank[this.pagination.currentPage-1].selectedIndex
       },
       numQ() {
         return this.$route.params.numQ || "";
@@ -90,7 +90,7 @@
         return this.$route.params.testId || "";
       },
       currentQ() {
-        return this.questionBank[this.pagination.currentPage-1] || "";
+        return this.$questionBank[this.pagination.currentPage-1] || "";
       }
     },
     methods: {
@@ -110,12 +110,13 @@
 
         // init questionBank by copying over the questions from the question file
         for(let value of randQuestions) {
-          this.questionBank.push(
+          this.$questionBank.push(
             { 
               selectedIndex: -1,  // user's selected answer (index)
               questionIdx: value, // index of the question in the question file (csv)
-              correctAnswer: this.$testData[value].ans,
+              correctAnswer: parseInt(this.$testData[value].ans),
               question: this.$testData[value].question,
+              ansIsCorrect: null,
               options: {  // hard-coding 6 (max) answer options
                 0: this.$testData[value].opt1,
                 1: this.$testData[value].opt2,
@@ -127,13 +128,15 @@
             }
           );
         }
+        console.log(this.$questionBank);
+
       },  // end methods()
       paginate(page) {
         console.log("page:", page);
         //let idx = this.questionBank[this.pagination.currentPage-1].questionIdx;
       },
       selectedAnswer(index) {
-        this.questionBank[this.pagination.currentPage-1].selectedIndex = index;
+        this.$questionBank[this.pagination.currentPage-1].selectedIndex = index;
       },
       selectedClass(index) {
         let cls = "";
@@ -144,12 +147,49 @@
       },
       allAnswered(){
         // returns true if all questions have been answered
-        for(const question of this.questionBank) {
+        for(const question of this.$questionBank) {
           if(question.selectedIndex == -1) {
             return false
           }
         }
         return true;
+      },
+      submitTest() {
+        // Correct the test
+        let numCorrect = 0;
+        for (const question of this.$questionBank) {
+          
+          if (parseInt(question.selectedIndex) == (question.correctAnswer - 1) ) {
+            // -1 is needed because the indexes are 0 based but the CSV
+            // asks for which question number (opt1, opt2, etc).
+            question.ansIsCorrect = true;
+            numCorrect += 1;
+          } else {
+            question.ansIsCorrect = false;
+          }
+
+        }
+
+        // Calculate if passed test
+        let passedTest = (Math.floor(numCorrect / this.numQ) * 100) >= this.minPassing;
+        console.log("min passing: ", this.minPassing);
+        console.log("num correct: ", numCorrect);
+        console.log("Passed:", passedTest);
+        console.log("question bank: ", this.$questionBank);
+
+
+        this.$router.push(
+					{ 
+						name: 'results', 
+						params: 
+              { 
+                studentName: this.$route.params.studentName,
+                passedTest,
+                minPassing: this.minPassing, 
+                testName: this.testId
+              } 
+					}
+				);
 
       }
     },
