@@ -8,7 +8,7 @@
         >
 
             <b-form-input
-                v-model="name"
+                v-model="$studentName"
                 type="text"
                 placeholder="Enter your name"
             >
@@ -16,7 +16,7 @@
             <b-button
                 type="submit"
                 :variant="setBtnVariant()"
-                :disabled="name == ''"
+                :disabled="$studentName == ''"
                 block
                 size="sm"
                 class="mt-1"
@@ -30,35 +30,18 @@
 
 <script>
 export default {
-    data() {
-        return {
-            name: ''
-        }
-    },
     methods: {
         onSubmit() {
-            this.$router.push(
-                { 
-                    name: 'TestOptions', 
-                    params: 
-                        { 
-                        studentName: this.name,
-                        testId: this.$route.params.testId
-                        } 
-                }
-            );
+            this.$router.push({ name: 'TestOptions' });
         },
         setBtnVariant() {
             return (this.name == '') ? "secondary" : "primary";
         }
     }
-
 }
 </script>
 
 <style scoped>
-
-
 
     #container {
         display: flex;
@@ -66,7 +49,6 @@ export default {
         align-items: center;
         justify-content: center;
         height: 100vh;
-       
     }
 
     .h1-responsive {

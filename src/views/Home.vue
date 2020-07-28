@@ -51,9 +51,11 @@ export default {
       import(`@/assets/data/${buttonVal}.csv`)
       .then( ({default: data}) => { 
         // push question file (csv) data to global var
-        this.$testData = data;
+		this.$testData = data;
+		// push testId to global var
+		this.$testId = buttonVal;
         // route to next test options page
-        this.$router.push({ name: 'studentName', params: {testId: buttonVal}});
+        this.$router.push({ name: 'studentName'});
       })
       .catch( error => console.log(error));
     }

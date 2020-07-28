@@ -25,17 +25,13 @@ export default {
         pdfOutput() {
             return this.output;
         },
-        studentName() {
-            // returns: string
-            return this.$route.params.studentName || "None Supplied";
-        },
         passedTest() {
             // returns: bool
             return this.$route.params.passedTest;
         },
-        testName() {
-            // returns: string
-            return this.$route.params.testName || "None Supplied";
+        score() {
+            // students score (percentage %)
+            return this.$route.params.score;
         }
     },
     methods: {
@@ -58,11 +54,11 @@ export default {
             doc.setFontType("italic");
             doc.addImage(img, "JPEG", 0, 0);
             doc.setFontSize(26);
-            const name = this.$route.params.studentName;
+            const name = this.$studentName;
             let offset = this.xOffset(doc, name);
             doc.text(offset, 192, name);
 
-            let courseName = this.testName;
+            let courseName = this.$testId;
             offset = this.xOffset(doc, courseName);
             doc.text(offset, 270, courseName);
 
@@ -74,7 +70,7 @@ export default {
             let dateText = "Conferred on this " + day + " of " + month + " in the year " + year; 
             offset = this.xOffset(doc, dateText);
 
-            doc.text(offset + 20, 313, dateText);
+            doc.text(offset, 313, dateText);
 
             this.output = doc.output('bloburl');
         },

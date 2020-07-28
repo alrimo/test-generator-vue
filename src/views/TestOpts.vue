@@ -6,7 +6,7 @@
 			<b-row align-h="center" class="text-center">
 				<b-col>
 					<h1>Options Page</h1>
-					<div><p>{{testId}}</p></div>
+					<div><p>{{$testId}}</p></div>
 				</b-col>
 			</b-row>
 			<b-row>
@@ -25,7 +25,7 @@
 						>
 							<b-form-select
 								id="dd-num-q"
-								v-model="form.numQSelected"
+								v-model="$numRandQuestions"
 								:options="numQOpts"
 								required
 							></b-form-select>
@@ -40,7 +40,7 @@
 						>
 							<b-form-spinbutton
 								id="spin-min-passing"
-								v-model="form.minPass"
+								v-model="$minPassing"
 								min="1"
 								max="100"
 							/>
@@ -65,11 +65,6 @@
 
 		data() {
 			return {
-				testId: this.$route.params.testId,				
-				form: {
-					numQSelected: null,
-					minPass: 75
-				},
 				questions: []
 			}
 		},
@@ -84,7 +79,7 @@
 				//console.log(this.$testData);
 
 				let val = null;
-				for(let i=0; i < this.numQ; i++) {
+				for(let i=0; i < this.$testLength; i++) {
 					val = i + 1;
 					opts.push( { value: val, text: val.toString() } )
 				}
@@ -92,24 +87,13 @@
 				return opts;
 			},
 			submitDisabled() {
-				return this.form.numQSelected == null;
+				return this.$numRandQuestions == null;
 			}
 
 		},
 		methods: {
 			onSubmit() {
-				this.$router.push(
-					{ 
-						name: 'test', 
-						params: 
-							{ 
-								numQ: this.form.numQSelected, 
-								minPassing: this.form.minPass, 
-								testId: this.testId,
-								studentName: this.$route.params.studentName
-							} 
-					}
-				);
+				this.$router.push( { name: 'test' } );
 			}
 		}
 

@@ -30,7 +30,7 @@
               
               <b-pagination
                 v-model="pagination.currentPage"
-                :total-rows="numQ"
+                :total-rows="$numRandQuestions"
                 :per-page="pagination.perPage"
                 @input="paginate(pagination.currentPage)"
               ></b-pagination>
@@ -80,15 +80,15 @@
       selectedIndex() {
         return this.$questionBank[this.pagination.currentPage-1].selectedIndex
       },
-      numQ() {
+      /*numQ() {
         return this.$route.params.numQ || "";
-      },
+      }, 
       minPassing() {
         return this.$route.params.minPassing || "";
-      },
+      }, 
       testId() {
         return this.$route.params.testId || "";
-      },
+      }, */
       currentQ() {
         return this.$questionBank[this.pagination.currentPage-1] || "";
       }
@@ -106,7 +106,7 @@
         // Shuffle array then truncate to # of user-selected questions
         // These are the indices of our random questions in the question file
         this.shuffleArray(randQuestions);
-        randQuestions.length = this.numQ;
+        randQuestions.length = this.$numRandQuestions;
 
         // init questionBank by copying over the questions from the question file
         for(let value of randQuestions) {
@@ -171,25 +171,17 @@
         }
 
         // Calculate if passed test
-        let passedTest = (Math.floor(numCorrect / this.numQ) * 100) >= this.minPassing;
-        console.log("min passing: ", this.minPassing);
-        console.log("num correct: ", numCorrect);
-        console.log("Passed:", passedTest);
-        console.log("question bank: ", this.$questionBank);
+        const score = Math.floor(numCorrect / this.numQ) * 100;
+        const passedTest = score >= this.$minPassing;
+        if(this.$debug) {
+          console.log("min passing: ", this.$minPassing);
+          console.log("student score %: ", score);
+          console.log("Passed:", passedTest);
+          console.log("num correct: ", numCorrect);
+          console.log("question bank: ", this.$questionBank); 
+        }
 
-
-        this.$router.push(
-					{ 
-						name: 'results', 
-						params: 
-              { 
-                studentName: this.$route.params.studentName,
-                passedTest,
-                minPassing: this.minPassing, 
-                testName: this.testId
-              } 
-					}
-				);
+        this.$router.push({ name: 'results', params: { passedTest, score} });
 
       }
     },

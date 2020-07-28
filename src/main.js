@@ -12,8 +12,17 @@ Vue.config.productionTip = false;
 // so we don't have to use Vuex
 let globalData = new Vue({
   data: {
-    $testData: [],
-    $questionBank: []
+    testData: [],
+    questionBank: [],
+    userParams: {
+      studentName: "",
+      minPassing: 75,
+      numRandQuestions: null,
+      testId: null
+    },
+    debug: false
+
+    
   }  
 });
 
@@ -22,16 +31,34 @@ let globalData = new Vue({
 Vue.mixin({
   computed: {
     $testData: {
-      get() { return globalData.$data.$testData},
-      set(newData) { globalData.$data.$testData = newData}
+      get() { return globalData.$data.testData},
+      set(newData) { globalData.$data.testData = newData}
     },
     $testLength() {
-      return globalData.$data.$testData.length;
+      return globalData.$data.testData.length;
     },
     $questionBank: {
-      get() { return globalData.$data.$questionBank},
-      set(newData) { globalData.$data.$questionBank = newData}
-    }
+      get() { return globalData.$data.questionBank},
+      set(newData) { globalData.$data.questionBank = newData}
+    },
+    $studentName: {
+      get() { return globalData.$data.userParams.studentName },
+      set(newData) { globalData.$data.userParams.studentName = newData }
+    },
+    $minPassing: {
+      get() { return globalData.$data.userParams.minPassing },
+      set(newData) { globalData.$data.userParams.minPassing = newData }
+    },
+    $numRandQuestions: {
+      get() { return globalData.$data.userParams.numRandQuestions },
+      set(newData) { globalData.$data.userParams.numRandQuestions = newData }
+    },
+    $testId: {
+      get() { return globalData.$data.userParams.testId },
+      set(newData) { globalData.$data.userParams.testId = newData }
+    },
+    $debug() { return globalData.$data.debug }
+
   }
 });
 
