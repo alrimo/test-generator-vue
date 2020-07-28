@@ -6,11 +6,11 @@
           <b-card>
             
             <b-card-header id="cardHeader" class="text-center">
-              <h3>Question {{ currentQ.questionIdx }}</h3>
+              <h3>Question {{ pagination.currentPage }}</h3>
             </b-card-header>
             
             <b-card-body>
-              <h3></h3>
+              <h3>{{ currentQ.question }}</h3>
               <b-list-group
                 v-for="(option, index) in currentQ.options" 
                 :key="index"
@@ -30,7 +30,7 @@
               
               <b-pagination
                 v-model="pagination.currentPage"
-                :total-rows="$numRandQuestions"
+                :total-rows="totalRows"
                 :per-page="pagination.perPage"
                 @input="paginate(pagination.currentPage)"
               ></b-pagination>
@@ -80,21 +80,39 @@
       selectedIndex() {
         return this.$questionBank[this.pagination.currentPage-1].selectedIndex
       },
-      /*numQ() {
-        return this.$route.params.numQ || "";
-      }, 
-      minPassing() {
-        return this.$route.params.minPassing || "";
-      }, 
-      testId() {
-        return this.$route.params.testId || "";
-      }, */
+      testVersion() {
+        return this.$route.params.testVersion;
+      },
+      totalRows() {
+        return this.$questionBank.length;
+      },
       currentQ() {
         return this.$questionBank[this.pagination.currentPage-1] || "";
       }
     },
     methods: {
-      init() {
+      initVersions(){
+        /*  Desc: User selected a test version
+            Approach: pull out all questions w/ that version number,
+                      and then pass to constructQuestionBank() 
+        */
+        let Qs = [];
+        for(let [idx, q] of this.$testData.entries()) {
+          if(q.version.toUpperCase() == this.testVersion) {
+            console.log("idx: ", idx);
+            console.log("q: ", q);
+            Qs.push(idx);
+          }
+        }
+
+        if(this.$debug) {
+          console.log("Version Questions:", Qs); 
+          }
+
+        this.constructQuestionBank(Qs);
+        
+      },
+      initRandomized() {
         /* Desc: randomly select questions from question file */
         
         // array w/ sequential numbers - same length as question file 
@@ -107,9 +125,14 @@
         // These are the indices of our random questions in the question file
         this.shuffleArray(randQuestions);
         randQuestions.length = this.$numRandQuestions;
-
+        if(this.$debug) { console.log("Random Questions", randQuestions); }
+        this.constructQuestionBank(randQuestions);
+       
+        
+      },
+      constructQuestionBank(questions){
         // init questionBank by copying over the questions from the question file
-        for(let value of randQuestions) {
+        for(let value of questions) {
           this.$questionBank.push(
             { 
               selectedIndex: -1,  // user's selected answer (index)
@@ -128,9 +151,8 @@
             }
           );
         }
-        console.log(this.$questionBank);
-
-      },  // end methods()
+        if(this.$debug){ console.log(this.$questionBank); }
+      },
       paginate(page) {
         console.log("page:", page);
         //let idx = this.questionBank[this.pagination.currentPage-1].questionIdx;
@@ -189,7 +211,11 @@
       }
     },
     mounted() {
-      this.init();
+      if(this.testVersion != null) {
+        this.initVersions();
+      } else {
+        this.initRandomized();
+      }
 
     }
 

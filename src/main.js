@@ -21,7 +21,7 @@ let globalData = new Vue({
       numRandQuestions: null,
       testId: null
     },
-    debug: false
+    debug: true
 
     
   }  
