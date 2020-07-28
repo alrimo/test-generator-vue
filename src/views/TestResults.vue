@@ -1,11 +1,32 @@
 <template>
-    <section>
+    <section id="container">
+        <div class="d-flex justify-content-center align-items-center flex-column">
+            <h2 class="h2-responsive">{{ resultTitle }}</h2>
+            <h4 class="h4-responsive">Your Score </h4>
+            <p> {{ score }}% </p>
+            <h4 class="h4-responsive">Minimum Passing</h4>
+            <p> {{ $minPassing }}%</p>
 
-       
+        </div>
+
+        <div>
+            <b-button
+                variant="primary"
+                v-if=passedTest
+                :disabled=!passedTest
+                class="mt-1 w-100"
+                @click="generatePdf"
+                
+            >
+            Print Certificate
+            </b-button>
+        </div>
+        <!--
         <iframe :src=pdfOutput width="960" height="720">
             This browser does not support the display of PDFs
         </iframe>
-           
+        --> 
+
 
 
     </section>
@@ -18,7 +39,8 @@ import * as jsPDF from 'jspdf';
 export default {
     data() {
         return {
-            output: null
+            output: null,
+            resultTitle: "Default Title"
         }
     },
     computed: {
@@ -58,7 +80,7 @@ export default {
             let offset = this.xOffset(doc, name);
             doc.text(offset, 192, name);
 
-            let courseName = this.$testId;
+            let courseName = this.$testName;
             offset = this.xOffset(doc, courseName);
             doc.text(offset, 270, courseName);
 
@@ -72,7 +94,11 @@ export default {
 
             doc.text(offset, 313, dateText);
 
-            this.output = doc.output('bloburl');
+
+            //this.output = doc.output('bloburl');
+            const fileName = `${this.$studentName} Certificate.pdf`;
+            doc.save(fileName);
+
         },
         xOffset(doc, text) {
             return (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(text) * doc.internal.getFontSize() / 2); 
@@ -95,14 +121,30 @@ export default {
             ]
 
             return [d.getDay(), months[d.getMonth()], d.getFullYear()];
+        },
+        setupPage() {
+            if(this.passedTest) {
+                this.resultTitle = "Congratulations, you passed!";
+            } else {
+                this.resultTitle = "Sorry, you did not pass";
+            }
+            
         }
     },
     mounted() {
-        this.generatePdf();
+        //this.generatePdf();\
+        this.setupPage();
     }
 }
 </script>
 
-<style>
+<style scoped>
+    #container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
 
 </style>

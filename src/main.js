@@ -14,6 +14,7 @@ let globalData = new Vue({
   data: {
     testData: [],
     questionBank: [],
+    testName: "",
     userParams: {
       studentName: "",
       minPassing: 75,
@@ -56,6 +57,10 @@ Vue.mixin({
     $testId: {
       get() { return globalData.$data.userParams.testId },
       set(newData) { globalData.$data.userParams.testId = newData }
+    },
+    $testName: {
+      get() { return globalData.$data.testName },
+      set(newData) { globalData.$data.testName = newData }
     },
     $debug() { return globalData.$data.debug }
 

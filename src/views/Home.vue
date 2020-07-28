@@ -42,7 +42,7 @@ export default {
 	  		{variant: "danger", text: "KC-10", val: "kc-10"},
 	  		{variant: "warning", text: "KC-135", val: "kc-135"},
 	  		{variant: "info", text: "VIP/SAM", val: "vip-sam"},
-	  	]
+		  ]
 	  }
   },
   methods: {
@@ -54,6 +54,8 @@ export default {
 		this.$testData = data;
 		// push testId to global var
 		this.$testId = buttonVal;
+		// set test name
+		this.$testName = `${this.$testId.toUpperCase()} Standardized MQF`
         // route to next test options page
         this.$router.push({ name: 'studentName'});
       })
