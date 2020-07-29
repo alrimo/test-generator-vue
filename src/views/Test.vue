@@ -195,7 +195,7 @@
         // Calculate if passed test
         let score = 0;
         if (numCorrect > 0) {
-          score = Math.floor(numCorrect / this.$numRandQuestions) * 100;
+          score = Math.floor( (numCorrect / this.totalRows) * 100 );
         }
         const passedTest = score >= this.$minPassing;
         if(this.$debug) {

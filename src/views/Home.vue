@@ -21,12 +21,29 @@
   				</b-button-group>
   			</b-col>
   		</b-row>
+		  <b-row align-h="center">
+        <b-col>
+          <div id="drop-area">
+            <b-form-file
+              v-model="file"
+              :state="Boolean(file)"
+              placeholder="Choose a file or drop it here..."
+              drop-placeholder="Drop file here..."
+              accept=".csv, .txt"
+              @input="handleUpload"
+            >
+
+            </b-form-file>
+          </div>
+        </b-col>
+		  </b-row>
   	</b-container>
   </div>
 </template>
 
 <script>
 import Jumbotron from "@/views/Jumbotron.vue";
+import * as Papa from 'papaparse';
 
 export default {
   name: "Home",
@@ -42,20 +59,49 @@ export default {
 	  		{variant: "danger", text: "KC-10", val: "kc-10"},
 	  		{variant: "warning", text: "KC-135", val: "kc-135"},
 	  		{variant: "info", text: "VIP/SAM", val: "vip-sam"},
-		  ]
+		  ],
+      file: null
 	  }
   },
   methods: {
+    handleUpload(){
+      //console.log("File:", this.file);
+      
+
+      Papa.parse(this.file, {
+        skipEmptyLines: "greedy",
+        delimiter: "\t",
+        header: true,
+        complete: (results) => { 
+           //arrow function required here (anonymous function creates a new scope for "this")
+          
+          // debug
+          if(this.$debug) { 
+            console.log(results); 
+            console.log("this: ", this);
+          }
+          this.parseAndGo(results);
+        }
+      });
+      
+
+
+    },
+    parseAndGo(data) {
+      this.$testData = data.data;
+      this.$testId = this.file.name;
+      this.$router.push({ name: 'testName' });
+    },
     loadAndGo(buttonVal) {
       // load the data file
       import(`@/assets/data/${buttonVal}.csv`)
       .then( ({default: data}) => { 
         // push question file (csv) data to global var
-		this.$testData = data;
-		// push testId to global var
-		this.$testId = buttonVal;
-		// set test name
-		this.$testName = `${this.$testId.toUpperCase()} Standardized MQF`
+        this.$testData = data;
+        // push testId to global var
+        this.$testId = buttonVal;
+        // set test name
+        this.$testName = `${this.$testId.toUpperCase()} Standardized MQF`
         // route to next test options page
         this.$router.push({ name: 'studentName'});
       })

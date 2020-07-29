@@ -5,6 +5,7 @@ import TestOptions from "@/views/TestOpts.vue";
 import Test from "@/views/Test.vue";
 import Results from "@/views/TestResults.vue";
 import StudentName from "@/views/StudentName.vue";
+import TestName from "@/views/TestName.vue";
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,11 @@ const routes = [
     name: "studentName",
     component: StudentName
   },
+  {
+    path: "/testName",
+    name: "testName",
+    component: TestName
+  }
 ];
 
 const router = new VueRouter({

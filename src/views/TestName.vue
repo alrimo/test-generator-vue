@@ -1,22 +1,22 @@
 <template>
-  <section id="container">
+ <section id="container">
     <div id="centered"> 
-        <h1 class="h1-responsive">Please Enter Your Name</h1>
+        <h1 class="h1-responsive">Please Enter Name of Custom Test</h1>
         <b-form 
             id="formName"
             @submit.prevent="onSubmit"
         >
 
             <b-form-input
-                v-model="$studentName"
+                v-model="$testName"
                 type="text"
-                placeholder="Enter your name"
+                placeholder="Enter test name"
             >
             </b-form-input>
             <b-button
                 type="submit"
                 :variant="setBtnVariant()"
-                :disabled="$studentName == ''"
+                :disabled="$testName == ''"
                 block
                 size="sm"
                 class="mt-1"
@@ -32,16 +32,16 @@
 export default {
     methods: {
         onSubmit() {
-            this.$router.push({ name: 'TestOptions' });
+            this.$router.push({ name: 'studentName' });
         },
         setBtnVariant() {
-            return (this.$studentName == '') ? "secondary" : "primary";
+            return (this.$testName == '') ? "secondary" : "primary";
         }
     }
 }
 </script>
 
-<style scoped>
+<style>
 
     #container {
         display: flex;
