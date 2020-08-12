@@ -7,10 +7,12 @@
     >
       <b-navbar-brand>Test Generator</b-navbar-brand>
       <b-navbar-nav>
-        <b-nav-item @click="goHome">
+        <b-nav-item @click="route('Home')">
           Home
         </b-nav-item>
-        <b-nav-item>Create</b-nav-item>
+        <b-nav-item @click="route('create')">
+          Create
+        </b-nav-item>
       </b-navbar-nav>
 
     </b-navbar>
@@ -25,8 +27,8 @@
 export default {
   name: "App",
   methods: {
-    goHome() {
-      this.$router.push({ name: "Home"});
+    route(location) {
+      this.$router.push({ name: location});
     }
   }
 
