@@ -1,8 +1,34 @@
 <template>
     <section>
+
+      <nav class="sub-nav d-flex justify-content-center">
+        <button class="ml-auto">
+          <b-icon icon="pencil" class="mr-2"></b-icon>
+          Take Test
+        </button>
+        <button class="filled-btn" @click="saveCsv">Save CSV</button>
+      </nav>
+
       <div class="test-container">
         <b-card class="shadow-sm mt-3 max-width">
           <b-card-body>
+            <b-card class="bg-light rounded-0 mb-3">
+              <b-form-input 
+                id="inputMqfTitle"
+                v-model="mqfTitle"
+                type="text"  
+                placeholder="Title"
+                class="mb-2"          
+              >
+              </b-form-input>
+              <b-form-input 
+                id="inputMqfDesc"
+                v-model="mqfDesc"
+                type="text"  
+                placeholder="Description"          
+              >
+              </b-form-input>
+            </b-card>
             <div v-for="(item, idx) in mqf" :key="item.id" class="mb-3">
               <TestQuestion
                 :ordinal="getOrdinal(idx)"
@@ -39,7 +65,8 @@
 
 import TestQuestion from "@/components/TestQuestion.vue";
 import UniqueId from "@/assets/modules/uniqueId.js";
-
+import * as Papa from 'papaparse';
+import { saveAs } from 'file-saver';
 
 export default {
   components: {
@@ -47,7 +74,9 @@ export default {
   },
   data() {
     return {
-      mqf: []
+      mqf: [],
+      mqfTitle: "",
+      mqfDesc: ""
     }
   },
   watch: {
@@ -134,12 +163,81 @@ export default {
       // if we use the index in the template, the ordinal doesn't 
       // change when we add or delete test questions
       return idx + 1;
+    },
+    saveCsv(){
+      // Save user generated test to CSV
+
+      // convert data to CSV format: 
+      // ("question, opt1, opt2, opt3, opt4, opt5, opt6, ans") 
+      let mqfInCsv = [];
+      let tempObj = {};
+      let tempOpt = "";
+      let tempArr = [];
+
+      for(let entry of this.mqf) {
+        tempObj.question = entry.question;
+        
+        // copy array so we can force length of 6 (avoids reactivity issues)
+        // we need 6 entries to force opts 1-6 in the CSV
+        tempArr = [...entry.options];   
+        tempArr.length = 6; 
+        
+        // convert options array to individual object properties (opt1-opt6)
+        for(let [idx, opt] of tempArr.entries()){
+          tempOpt = `opt${idx + 1}`;
+          tempObj[tempOpt] = opt;
+        }
+        tempObj.ans = entry.correctIdx + 1;
+        // push object onto array 
+        mqfInCsv.push(tempObj);
+      }
+
+      // convert to CSV
+      const csv = Papa.unparse(mqfInCsv, {
+        delimiter: "\t"
+      });
+
+      // Save
+      const blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, "custom-test.csv");
+
     }
   }
 }
 </script>
 
 <style scoped>
+  .sub-nav {
+    box-sizing: border-box;
+    background-color: white;
+    padding: 3px;
+  }
+  .sub-nav > button {
+    padding: 0 25px;
+    background-color: transparent;
+    border: none;
+    height: 40px;
+    box-sizing: inherit;
+  }
+
+  .sub-nav > button:hover {
+    background-color: #EAEAEA;
+    color: #333;
+  }
+
+  .sub-nav > button.filled-btn {
+    background-color: #008272;
+    color: white;
+    vertical-align: top;
+    outline: 0;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+  }
+
+  .sub-nav > button.filled-btn:hover {
+    background-color:#004B50;
+  }
+
   .test-container {
     padding-left: calc(50% - 425px); 
   }
