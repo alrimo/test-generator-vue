@@ -17,10 +17,10 @@ const routes = [
     component: Home
   },
   {
-  	// question mark makes param optional
-  	path: "/options/:testId?",   
-  	name: "TestOptions",
-  	component: TestOptions
+    // question mark makes param optional
+    path: "/options/:testId?",
+    name: "TestOptions",
+    component: TestOptions
   },
   {
     path: "/test",
