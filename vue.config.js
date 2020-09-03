@@ -12,5 +12,6 @@ module.exports = {
 				skipEmptyLines: 'greedy'
       })
       .end();
-  }
+  },
+  publicPath: './'
 };
