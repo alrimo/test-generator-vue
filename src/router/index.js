@@ -6,6 +6,7 @@ import Test from "@/views/Test.vue";
 import Results from "@/views/TestResults.vue";
 import StudentName from "@/views/StudentName.vue";
 import TestName from "@/views/TestName.vue";
+import CreateTest from "@/views/CreateTest.vue";
 
 Vue.use(VueRouter);
 
@@ -16,10 +17,10 @@ const routes = [
     component: Home
   },
   {
-  	// question mark makes param optional
-  	path: "/options/:testId?",   
-  	name: "TestOptions",
-  	component: TestOptions
+    // question mark makes param optional
+    path: "/options/:testId?",
+    name: "TestOptions",
+    component: TestOptions
   },
   {
     path: "/test",
@@ -40,6 +41,11 @@ const routes = [
     path: "/testName",
     name: "testName",
     component: TestName
+  },
+  {
+    path: "/create",
+    name: "create",
+    component: CreateTest
   }
 ];
 

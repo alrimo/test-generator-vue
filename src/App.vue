@@ -1,37 +1,30 @@
 <template class="bg-light">
   <div id="app">
-    <b-navbar
-      type="dark"
-      variant="dark"
-      :sticky=true
-    >
+    <b-navbar type="dark" variant="dark" :sticky="true">
       <b-navbar-brand>Test Generator</b-navbar-brand>
       <b-navbar-nav>
-        <b-nav-item @click="goHome">
+        <b-nav-item @click="route('Home')">
           Home
         </b-nav-item>
-        <b-nav-item>Create</b-nav-item>
+        <b-nav-item @click="route('create')">
+          Create
+        </b-nav-item>
       </b-navbar-nav>
-
     </b-navbar>
 
     <router-view></router-view>
   </div>
-
 </template>
 
 <script>
-
 export default {
   name: "App",
   methods: {
-    goHome() {
-      this.$router.push({ name: "Home"});
+    route(location) {
+      this.$router.push({ name: location });
     }
   }
-
 };
-
 </script>
 
 <style lang="scss">
@@ -43,8 +36,8 @@ export default {
   color: #323130;
 }
 
-html,body {
+html,
+body {
   background-color: #f8f9fa !important;
 }
-
 </style>
