@@ -1,11 +1,15 @@
 <template>
   <section>
     <nav class="sub-nav d-flex justify-content-center">
+      <button v-b-modal.confirmReset class="ml-auto">
+        <b-icon icon="arrow-repeat"></b-icon>
+        Reset
+      </button>
       <button v-if="showTakeTest" class="ml-auto">
         <b-icon icon="pencil" class="mr-2"></b-icon>
         Take Test
       </button>
-      <button class="filled-btn ml-auto" @click="saveCsv">Save CSV</button>
+      <button class="filled-btn" @click="saveCsv">Save CSV</button>
     </nav>
 
     <div class="test-container">
@@ -54,6 +58,9 @@
         </b-card-body>
       </b-card>
     </div>
+    <b-modal id="confirmReset" hide-header @ok="resetTest">
+      <p class="my-0">Reset the entire test? This cannot be undone.</p>
+    </b-modal>
   </section>
 </template>
 
@@ -108,6 +115,16 @@ export default {
     }
   },
   methods: {
+    /**
+     * Clear the form of all questions
+     */
+    resetTest() {
+      if (localStorage.getItem("mqf")) {
+        localStorage.removeItem("mqf");
+        console.log("Local MQF storage cleared");
+      }
+      this.mqf = [];      
+    },
     /**
      * Add a new empty question with
      * two blank options
