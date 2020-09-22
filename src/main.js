@@ -56,14 +56,14 @@ Vue.mixin({
         globalData.$data.questionBank = newData;
       }
     },
-    /*$studentName: {
+    $studentName: {
       get() {
         return globalData.$data.userParams.studentName;
       },
       set(newData) {
         globalData.$data.userParams.studentName = newData;
       }
-    },*/
+    },
     $minPassing: {
       get() {
         return globalData.$data.userParams.minPassing;

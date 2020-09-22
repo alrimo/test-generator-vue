@@ -68,7 +68,7 @@ export default {
       doc.setFontType("italic");
       doc.addImage(img, "JPEG", 0, 0);
       doc.setFontSize(26);
-      const name = this.studentName;
+      const name = this.$studentName;
       let offset = this.xOffset(doc, name);
       doc.text(offset, 192, name);
 
@@ -113,7 +113,7 @@ export default {
         "December"
       ];
 
-      return [d.getDay(), months[d.getMonth()], d.getFullYear()];
+      return [d.getDate(), months[d.getMonth()], d.getFullYear()];
     },
     setupPage() {
       if (this.passedTest) {

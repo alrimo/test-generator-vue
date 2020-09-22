@@ -19,6 +19,20 @@
         </b-row>
         <b-row align-h="center">
           <b-col>
+            <h1 class="display-4 text-center mt-5 mb-3">Create Test</h1>
+            <b-row align-h="center">
+              <b-col cols="5">
+                <b-button 
+                  block
+                  variant="dark"
+                  @click="$router.push({ name: 'create' })"
+                >Create Custom Test</b-button>
+              </b-col>
+            </b-row>
+          </b-col>
+        </b-row>        
+        <b-row align-h="center">
+          <b-col>
             <h1 class="display-4 text-center mt-5 mb-3">Custom Upload</h1>
             <b-row id="drop-area" align-h="center">
               <b-col cols="6">
@@ -35,6 +49,7 @@
             </b-row>
           </b-col>
         </b-row>
+
       </b-container>
 
       <div class="justify-content-center row justify-content-center mt-5 pb-5">
@@ -58,7 +73,23 @@
 
             <b-collapse id="instrCollapse">
               <div class="card">
-                <h3 class="card-header bg-info text-white">Step One</h3>
+                <h3 class="card-header bg-info text-white">Step One (Primary)</h3>
+                <div class="card-body">
+                  <h5 class="mb-1">Create test using test creator</h5>
+                  <img
+                    src="@/assets/img/test-creator-ss.jpg"
+                    class="img-fluid"
+                  />
+                  <hr>
+                  <ol>
+                    <li>Click "Create" button above</li>
+                    <li>Save your generated CSV</li>
+                    <li>Upload above</li>
+                  </ol>
+                </div>
+              </div>
+              <div class="card">
+                <h3 class="card-header bg-info text-white">Step One (Secondary)</h3>
                 <div class="card-body">
                   <h5 class="mb-1">Create question file in Excel</h5>
                   <span class="d-block"

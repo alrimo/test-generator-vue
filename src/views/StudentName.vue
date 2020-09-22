@@ -31,6 +31,11 @@
 import {required, minLength } from 'vuelidate/lib/validators';
 
 export default {
+  data() {
+    return {
+      studentName: ""
+    }
+  },
   validations: {
     studentName: {
       required,
@@ -39,6 +44,7 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.$studentName = this.studentName; 
       this.$router.push({ name: "TestOptions" });
     },
     setBtnVariant() {
