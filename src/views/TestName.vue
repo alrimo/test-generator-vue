@@ -27,12 +27,13 @@
 export default {
   methods: {
     onSubmit() {
+      this.$testId = this.$testName;
       this.$router.push({ name: "studentName" });
     },
     setBtnVariant() {
       return this.$testName == "" ? "secondary" : "primary";
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -201,43 +201,30 @@ export default {
   },
   methods: {
     handleUpload() {
-      //console.log("File:", this.file);
-
-      Papa.parse(this.file, {
+      this.parseAndGo(this.file, "undefined", "testName");
+    },
+    parseAndGo(data, testId, navTo) {
+      Papa.parse(data, {
         skipEmptyLines: "greedy",
         delimiter: "\t",
         header: true,
         complete: (results) => {
           //arrow function required here (anonymous function creates a new scope for "this")
-
           // debug
           if (this.$debug) {
             console.log(results);
-            console.log("this: ", this);
+            //console.log("this: ", this);
           }
-          this.parseAndGo(results);
+          this.$testData = results.data;
+          this.$testId = testId;
+          this.$router.push({ name: navTo });
         },
       });
     },
-    parseAndGo(data) {
-      this.$testData = data.data;
-      this.$testId = this.file.name;
-      this.$router.push({ name: "testName" });
-    },
     loadAndGo(buttonVal) {
-      // load the data file
-      import(`../../public/data/${buttonVal}.csv`)
-        .then(({ default: data }) => {
-          // push question file (csv) data to global var
-          this.$testData = data;
-          // push testId to global var
-          this.$testId = buttonVal;
-          // set test name
-          this.$testName = `${this.$testId.toUpperCase()} Standardized MQF`;
-          // route to next test options page
-          this.$router.push({ name: "studentName" });
-        })
-        .catch((error) => console.log(error));
+      fetch(`/data/${buttonVal}.csv`)
+        .then((response) => response.text())
+        .then((data) => this.parseAndGo(data, buttonVal, "studentName"));
     },
   },
 };
