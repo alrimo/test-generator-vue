@@ -22,15 +22,16 @@
             <h1 class="display-4 text-center mt-5 mb-3">Create Test</h1>
             <b-row align-h="center">
               <b-col cols="5">
-                <b-button 
+                <b-button
                   block
                   variant="dark"
                   @click="$router.push({ name: 'create' })"
-                >Create Custom Test</b-button>
+                  >Create Custom Test</b-button
+                >
               </b-col>
             </b-row>
           </b-col>
-        </b-row>        
+        </b-row>
         <b-row align-h="center">
           <b-col>
             <h1 class="display-4 text-center mt-5 mb-3">Custom Upload</h1>
@@ -49,7 +50,6 @@
             </b-row>
           </b-col>
         </b-row>
-
       </b-container>
 
       <div class="justify-content-center row justify-content-center mt-5 pb-5">
@@ -73,14 +73,16 @@
 
             <b-collapse id="instrCollapse">
               <div class="card">
-                <h3 class="card-header bg-info text-white">Step One (Primary)</h3>
+                <h3 class="card-header bg-info text-white">
+                  Step One (Primary)
+                </h3>
                 <div class="card-body">
                   <h5 class="mb-1">Create test using test creator</h5>
                   <img
                     src="@/assets/img/test-creator-ss.jpg"
                     class="img-fluid"
                   />
-                  <hr>
+                  <hr />
                   <ol>
                     <li>Click "Create" button above</li>
                     <li>Save your generated CSV</li>
@@ -89,7 +91,9 @@
                 </div>
               </div>
               <div class="card">
-                <h3 class="card-header bg-info text-white">Step One (Secondary)</h3>
+                <h3 class="card-header bg-info text-white">
+                  Step One (Secondary)
+                </h3>
                 <div class="card-body">
                   <h5 class="mb-1">Create question file in Excel</h5>
                   <span class="d-block"
@@ -189,10 +193,10 @@ export default {
         { variant: "success", text: "C-5", val: "c-5" },
         { variant: "danger", text: "KC-10", val: "kc-10" },
         { variant: "warning", text: "KC-135", val: "kc-135" },
-        { variant: "info", text: "VIP/SAM", val: "vip-sam" }
+        { variant: "info", text: "VIP/SAM", val: "vip-sam" },
       ],
       file: null,
-      publicPath: process.env.BASE_URL
+      publicPath: process.env.BASE_URL,
     };
   },
   methods: {
@@ -203,7 +207,7 @@ export default {
         skipEmptyLines: "greedy",
         delimiter: "\t",
         header: true,
-        complete: results => {
+        complete: (results) => {
           //arrow function required here (anonymous function creates a new scope for "this")
 
           // debug
@@ -212,7 +216,7 @@ export default {
             console.log("this: ", this);
           }
           this.parseAndGo(results);
-        }
+        },
       });
     },
     parseAndGo(data) {
@@ -222,7 +226,7 @@ export default {
     },
     loadAndGo(buttonVal) {
       // load the data file
-      import(`@/assets/data/${buttonVal}.csv`)
+      import(`../../public/data/${buttonVal}.csv`)
         .then(({ default: data }) => {
           // push question file (csv) data to global var
           this.$testData = data;
@@ -233,9 +237,9 @@ export default {
           // route to next test options page
           this.$router.push({ name: "studentName" });
         })
-        .catch(error => console.log(error));
-    }
-  }
+        .catch((error) => console.log(error));
+    },
+  },
 };
 </script>
 
