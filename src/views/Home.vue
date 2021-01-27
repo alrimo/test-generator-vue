@@ -222,10 +222,18 @@ export default {
       });
     },
     loadAndGo(buttonVal) {
-      fetch(`/data/${buttonVal}.csv`)
+      this.$testName = "Standardized " + buttonVal.toUpperCase() + " MQF Test";
+      fetch(`${this.publicPath}data/${buttonVal}.csv`)
         .then((response) => response.text())
-        .then((data) => this.parseAndGo(data, buttonVal, "studentName"));
+        .then((data) => {
+          return this.parseAndGo(data, buttonVal, "studentName");
+        });
     },
+  },
+  created() {
+    // Clear any stored data on page load
+    console.log("Home created");
+    this.$clearData();
   },
 };
 </script>

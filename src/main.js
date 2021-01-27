@@ -18,23 +18,37 @@ let globalData = new Vue({
     testData: [],
     questionBank: [],
     testName: "",
+    randomQuestions: null,
     userParams: {
       studentName: "",
       minPassing: 75,
       numRandQuestions: null,
-      testId: null
+      testId: null,
     },
-    debug: true
-  }
+    debug: true,
+  },
 });
 
 // Global mixin so every component can
 // access the global variable
 Vue.mixin({
-  data(){
+  data() {
     return {
-      studentName: globalData.$data.userParams.studentName
-    } 
+      studentName: globalData.$data.userParams.studentName,
+    };
+  },
+  methods: {
+    // Reset the data - usually fired when hitting main page
+    $clearData() {
+      this.$testData = [];
+      this.$questionBank = [];
+      this.$testId = "";
+      this.$testName = "";
+      this.$minPassing = 75;
+      this.$numRandQuestions = null;
+      this.$studentName = "";
+      this.$randomQuestions = null;
+    },
   },
   computed: {
     $testData: {
@@ -43,7 +57,7 @@ Vue.mixin({
       },
       set(newData) {
         globalData.$data.testData = newData;
-      }
+      },
     },
     $testLength() {
       return globalData.$data.testData.length;
@@ -54,7 +68,7 @@ Vue.mixin({
       },
       set(newData) {
         globalData.$data.questionBank = newData;
-      }
+      },
     },
     $studentName: {
       get() {
@@ -62,7 +76,7 @@ Vue.mixin({
       },
       set(newData) {
         globalData.$data.userParams.studentName = newData;
-      }
+      },
     },
     $minPassing: {
       get() {
@@ -70,7 +84,7 @@ Vue.mixin({
       },
       set(newData) {
         globalData.$data.userParams.minPassing = newData;
-      }
+      },
     },
     $numRandQuestions: {
       get() {
@@ -78,7 +92,15 @@ Vue.mixin({
       },
       set(newData) {
         globalData.$data.userParams.numRandQuestions = newData;
-      }
+      },
+    },
+    $randomQuestions: {
+      get() {
+        return globalData.$data.userParams.randomQuestions;
+      },
+      set(newData) {
+        globalData.$data.userParams.randomQuestions = newData;
+      },
     },
     $testId: {
       get() {
@@ -86,7 +108,7 @@ Vue.mixin({
       },
       set(newData) {
         globalData.$data.userParams.testId = newData;
-      }
+      },
     },
     $testName: {
       get() {
@@ -94,15 +116,15 @@ Vue.mixin({
       },
       set(newData) {
         globalData.$data.testName = newData;
-      }
+      },
     },
     $debug() {
       return globalData.$data.debug;
-    }
-  }
+    },
+  },
 });
 
 new Vue({
   router,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount("#app");

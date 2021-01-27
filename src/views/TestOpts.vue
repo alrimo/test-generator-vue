@@ -74,7 +74,7 @@ export default {
     return {
       questions: [],
       versions: [],
-      selectedVersion: null
+      selectedVersion: null,
     };
   },
   computed: {
@@ -119,13 +119,13 @@ export default {
       }
 
       return disabled;
-    }
+    },
   },
   methods: {
     onSubmit() {
       this.$router.push({
         name: "test",
-        params: { testVersion: this.selectedVersion }
+        params: { testVersion: this.selectedVersion },
       });
     },
     handleVersions() {
@@ -172,10 +172,10 @@ export default {
       if (val != null) {
         this.$numRandQuestions = null;
       }
-    }
+    },
   },
   mounted() {
     this.handleVersions();
-  }
+  },
 };
 </script>

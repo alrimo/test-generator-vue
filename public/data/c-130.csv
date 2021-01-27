@@ -1,20 +1,20 @@
 question	opt1	opt2	opt3	opt4	opt5	opt6	ans	version
-When was the first flight of the C-130?	1954	1960	1945	1958	None of the above		1	b
-How many C-130 aircraft have been built?	Over 2,500	1320	2300	500			1	b
-How much does a C-130E cost?	$11.9 M	$30.1 M	$22.5M	$9.8M			1	b
-How much does a C-130H cost?	$30.1 M	$11.9 M	$13.6 M	$22.5M			1	b
-What is the max speed of the C-130J?	410 mph	380 mph	260 mph	505 mph			1	a
-What is the max payload of the C-130J?	44k lbs	40k lbs	38k lbs	52k lbs	None of the above		1	
-How many pallets can the C-130J carry?	8	10	9	18			1	b
-How many CDS bundles can the C-130J carry?	24	12	26	30			1	
-What is the max operating ceiling of the C-130J (with a 44.k lb payload)?	26k ft	30k ft	22.5k ft	28.5k ft			1	b
-What is the typical crew for the C-130?	2x pilots, loadmaster, engineer, navigator	2x pilots, loadmaster, navigator	2x pilots, boom operator, engineer	1x pilot loadmaster, engineer	None of the above	opt6	1	a
-Which command(s) does the C-130 operate in?	AMC	AFSOC	ACC	USAFE	None of the above	All of the above	1	c
-The C-130 is the primary transport aircraft for airdropping troops and equipment into hostile areas	True	False					1	
-The C-130 is capable of operating from rought, dirt strips	True	False					1	a
-The C-130J-30 adds how many feet to its fuselage?	15 ft	20 ft	15 ft	18 ft	None of the above		1	
-Who produces the C-130?	Lockheed-Martin	Boeing	Airbus	Northrup Grumman			1	c
-What is the length of the C-130 E/H/J (non-stretch) models?	97 ft, 9 in	112 ft, 9 in	101 ft, 9 in	98 ft 1 in			1	
-What is the wingspan of the C-130?	132 ft, 7 in	130 ft, 2 in	150 ft, 5 in	160 ft, 4 in			1	c
-What is the speed of the C-130H at 20k feet?	366 mph	355 mph	423 mph	417 mph			1	c
-What is the speed of the C-130J at 20k feet?	417 mph	366 mph	355 mph	423 mph			1	
+(U-FOUO) When was the first flight of the C-130?	1954	1960	1945	1958	None of the above		1	b
+(U-FOUO) How many C-130 aircraft have ___ been built?	Over 2,500	1320	2300	500			1	b
+(U-FOUO) How much does a C-130E cost?	$11.9 M	$30.1 M	$22.5M	$9.8M			1	b
+(U-FOUO) How much does a C-130H cost?	$30.1 M	$11.9 M	$13.6 M	$22.5M			1	b
+(U-FOUO) What is the max speed of the C-130J?	410 mph	380 mph	260 mph	505 mph			1	a
+(U-FOUO) What is the max payload of the C-130J?	44k lbs	40k lbs	38k lbs	52k lbs	None of the above		1	
+(U-FOUO) How: many pallets can the C-130J carry?	8	10	9	18			1	b
+(U-FOUO) How many CDS bundles can the C-130J carry?	24	12	26	30			1	
+(U-FOUO) What is the max operating ceiling of the C-130J (with a 44.k lb payload)?	26k ft	30k ft	22.5k ft	28.5k ft			1	b
+(U-FOUO) What is the typical crew for the C-130?	2x pilots, loadmaster, engineer, navigator	2x pilots, loadmaster, navigator	2x pilots, boom operator, engineer	1x pilot loadmaster, engineer	None of the above	opt6	1	a
+(U-FOUO) Which command(s) does the C-130 operate in?	AMC	AFSOC	ACC	USAFE	None of the above	All of the above	1	c
+(U-FOUO) The C-130 is the primary transport aircraft for airdropping troops and equipment into hostile areas	True	False					1	
+(U-FOUO) The C-130 is capable of operating from rought, dirt strips	True	False					1	a
+(U-FOUO) The C-130J-30 adds how many feet to its fuselage?	15 ft	20 ft	15 ft	18 ft	None of the above		1	
+(U-FOUO) Who produces the C-130?	Lockheed-Martin	Boeing	Airbus	Northrup Grumman			1	c
+(U-FOUO) What is the length of the C-130 E/H/J (non-stretch) models?	97 ft, 9 in	112 ft, 9 in	101 ft, 9 in	98 ft 1 in			1	
+(U-FOUO) What is the wingspan of the C-130?	132 ft, 7 in	130 ft, 2 in	150 ft, 5 in	160 ft, 4 in			1	c
+(U-FOUO) What is the speed of the C-130H at 20k feet?	366 mph	355 mph	423 mph	417 mph			1	c
+(U-FOUO) What is the speed of the C-130J at 20k feet?	417 mph	366 mph	355 mph	423 mph			1	

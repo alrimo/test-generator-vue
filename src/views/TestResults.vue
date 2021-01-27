@@ -8,15 +8,33 @@
       <p>{{ $minPassing }}%</p>
     </div>
 
-    <div>
+    <div class="d-flex justify-content-center align-items-center">
       <b-button
         variant="primary"
         v-if="passedTest"
         :disabled="!passedTest"
-        class="mt-1 w-100"
+        class="col-6 mt-1 mr-2 w-100 text-nowrap"
         @click="generatePdf"
       >
         Print Certificate
+      </b-button>
+
+      <b-button
+        variant="primary"
+        v-if="!passedTest"
+        :disabled="passedTest"
+        class="col-6 mt-1 mr-2 w-100 text-nowrap"
+        @click="retryTest"
+      >
+        Retry Test
+      </b-button>
+
+      <b-button
+        variant="secondary"
+        class="col-6 mt-1 w-100 text-nowrap"
+        @click="returnHome"
+      >
+        Return Home
       </b-button>
     </div>
     <!--
@@ -34,7 +52,7 @@ export default {
   data() {
     return {
       output: null,
-      resultTitle: "Default Title"
+      resultTitle: "Default Title",
     };
   },
   computed: {
@@ -48,14 +66,35 @@ export default {
     score() {
       // students score (percentage %)
       return this.$route.params.score;
-    }
+    },
+    testVersion() {
+      // current Test Version
+      return this.$route.params.testVersion || null;
+    },
   },
   methods: {
+    returnHome() {
+      this.$router.push({ name: "Home" });
+    },
+    retryTest() {
+      // for (let itm of this.$questionBank) {
+      //   if (this.$debug) {
+      //     console.log(itm);
+      //   }
+      //   itm.ansIsCorrect = null;
+      //   itm.selectedIndex = -1;
+      // }
+
+      this.$router.push({
+        name: "test",
+        params: { testVersion: this.testVersion },
+      });
+    },
     generatePdf() {
       let doc = new jsPDF({
         orientation: "landscape",
         format: "letter",
-        unit: "px"
+        unit: "px",
       });
       doc.setDisplayMode(1);
       let imgPath = require("@/assets/img/certificate-template.jpg");
@@ -110,7 +149,7 @@ export default {
         "September",
         "October",
         "November",
-        "December"
+        "December",
       ];
 
       return [d.getDate(), months[d.getMonth()], d.getFullYear()];
@@ -121,12 +160,12 @@ export default {
       } else {
         this.resultTitle = "Sorry, you did not pass";
       }
-    }
+    },
   },
   mounted() {
     //this.generatePdf();\
     this.setupPage();
-  }
+  },
 };
 </script>
 

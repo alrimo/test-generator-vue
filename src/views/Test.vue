@@ -57,8 +57,8 @@ export default {
     return {
       pagination: {
         currentPage: 1,
-        perPage: 1
-      }
+        perPage: 1,
+      },
     };
   },
   computed: {
@@ -73,7 +73,7 @@ export default {
     },
     currentQ() {
       return this.$questionBank[this.pagination.currentPage - 1] || "";
-    }
+    },
   },
   methods: {
     initVersions() {
@@ -108,14 +108,20 @@ export default {
       // Shuffle array then truncate to # of user-selected questions
       // These are the indices of our random questions in the question file
       this.shuffleArray(randQuestions);
-      randQuestions.length = this.$numRandQuestions;
+      randQuestions.length = this.$numRandQuestions || randQuestions.length; //select all questions if a number of random questions wasn't supplied
       if (this.$debug) {
         console.log("Random Questions", randQuestions);
       }
+
+      // set to global so we can access later (i.e., if user re-takes the test we can regenerate the same questions)
+      this.$randomQuestions = randQuestions;
+
+      // construct the question bank
       this.constructQuestionBank(randQuestions);
     },
     constructQuestionBank(questions) {
       // init questionBank by copying over the questions from the question file
+      this.$questionBank = []; //reset questionbank if already has data
       for (let value of questions) {
         this.$questionBank.push({
           selectedIndex: -1, // user's selected answer (index)
@@ -130,8 +136,8 @@ export default {
             2: this.$testData[value].opt3,
             3: this.$testData[value].opt4,
             4: this.$testData[value].opt5,
-            5: this.$testData[value].opt6
-          }
+            5: this.$testData[value].opt6,
+          },
         });
       }
       if (this.$debug) {
@@ -188,17 +194,35 @@ export default {
         console.log("num correct: ", numCorrect);
         console.log("question bank: ", this.$questionBank);
       }
-
-      this.$router.push({ name: "results", params: { passedTest, score } });
-    }
+      //let testVer = this.testVersion;
+      this.$router.push({
+        name: "results",
+        params: { passedTest, score, testVersion: this.testVersion },
+      });
+    },
   },
   mounted() {
     if (this.testVersion != null) {
+      // user selected a test version
       this.initVersions();
+    } else if (this.$randomQuestions != null) {
+      // Reset test questions since user is re-taking the same test
+      // This means looping through $questionBank and setting
+      // "ansIsCorrect" to null and "selectedIndex" to -1
+      for (let itm of this.$questionBank) {
+        if (this.$debug) {
+          console.log(itm);
+        }
+        itm.ansIsCorrect = null;
+        itm.selectedIndex = -1;
+      }
     } else {
+      // user isn't taking a versioned test or re-taking an existing one:
+      // generate randomize test - this assumes user selected number of
+      // questions to randomize on TestOps.vue (Test Options Page)
       this.initRandomized();
     }
-  }
+  },
 };
 </script>
 
